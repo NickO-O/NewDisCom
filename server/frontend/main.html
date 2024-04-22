@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .input-field {
+            border: 2px solid #2e8b57;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 10px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Ввод</a>
+        <a class="navbar-brand" href="/expressions">Выражения</a>
+        <a class="navbar-brand" href="/computers">Вычислители</a>
+        <a class="navbar-brand" href="/settings">Настройки</a>
+        <a class="navbar-brand" href="/exit">Выход</a>
+    </nav>
+    
+    <div class="container mt-3">
+        <input type="text" id="expression" class="input-field" placeholder="Enter expression...">
+        <button type="button" class="btn btn-primary mt-2" onclick="calculateExpression()">Calculate</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        function calculateExpression() {
+            const expression = document.getElementById('expression').value;
+            // Отправляем выражение на сервер
+            fetch('/calculate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: expression
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Форма для ввода</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 450px;
+        margin: 100px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+        width: 400px;
+        padding: 20px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        width: 400px;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Ввод</a>
+        <a class="navbar-brand" href="/expressions">Выражения</a>
+        <a class="navbar-brand" href="/computers">Вычислители</a>
+        <a class="navbar-brand" href="/settings">Настройки</a>
+        <a class="navbar-brand" href="/exit">Выход</a>
+    </nav>
+<div class="container">
+    <input id="t1" type="text" placeholder="Длительность +, сейчас {{.Plus}} сек" />
+    
+    <input id="t2" type="text" placeholder="Длительность - сейчас {{.Minus}} сек " />
+    <input id="t3" type="text" placeholder="Длительность * сейчас {{.Mul}} сек" />
+    <input id="t4" type="text" placeholder="Длительность / сейчас {{.Div}} сек" />
+    <button onclick="calculateExpression()">Отправить</button>
+</div>
+<script>
+    function calculateExpression() {
+        const t1 = document.getElementById('t1').value;
+        const t2 = document.getElementById('t2').value;
+        const t3 = document.getElementById('t3').value;
+        const t4 = document.getElementById('t4').value;
+        // Отправляем выражение на сервер
+        fetch('/settings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                    {
+                        "plus":t1,
+                        "minus":t2,
+                        "mul": t3,
+                        "div":t4
+                    }
+            )
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+</body>
+</html>

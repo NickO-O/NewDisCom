@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  database:
+    image: database:latest
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: database
+    volumes:
+      - ./database/db:/database/db
+    ports:
+      - "5050:5050"
+    networks:
+      - my_network
+
+  orchestrator:
+    build:
+      context: ./orchestrator
+      dockerfile: Dockerfile
+    container_name: orchestrator
+    depends_on:
+      - database
+    ports:
+      - "5000:5000"
+      - "8081:8081"
+    networks:
+      - my_network
+
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: server
+    depends_on:
+      - orchestrator
+      - database
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+

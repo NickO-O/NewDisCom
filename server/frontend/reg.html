@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        .login-container {
+            width: 300px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        input[type="text"],
+        input[type="password"],
+        button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .register-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #28a745;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <a href="/login" class="register-btn">Войти в аккаунт</a>
+    <div class="login-container">
+        <h2>Регистрация</h2>
+        <form>
+            <input id="login" type="text" placeholder="Логин" required><br>
+            <input id="pass" type="password" placeholder="Пароль" required><br>
+            <button href="/" type="submit" onclick="sus()">Зарегистрироваться</button>
+        </form>
+    </div>
+<script>
+    function sus(){
+        const t1 = document.getElementById('login').value;
+        const t2 = document.getElementById('pass').value;
+        fetch('/reg', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                    {
+                        "login":t1,
+                        "password":t2,
+                    }
+            )
+        })
+    }
+</script>
+
+</body>
+</html>
