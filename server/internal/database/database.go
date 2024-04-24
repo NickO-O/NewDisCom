@@ -14,20 +14,20 @@ import (
 
 var mu sync.Mutex
 
-var sus = "database"
+var Sus = "database"
 
 func WriteExpression(expr expression.Expression) {
 	mu.Lock()
 	defer mu.Unlock()
 	b, _ := json.Marshal(expr)
-	http.Post(fmt.Sprintf("http://%s:5050/add", sus), "application/json", bytes.NewReader(b))
+	http.Post(fmt.Sprintf("http://%s:5050/add", Sus), "application/json", bytes.NewReader(b))
 }
 
 func ReadExpression(id int) expression.Expression {
 	var expr expression.Expression
 	mu.Lock()
 	defer mu.Unlock()
-	resp, err := http.Get(fmt.Sprintf("http://%s:5050/get?Id=", sus) + fmt.Sprintf("%d", id))
+	resp, err := http.Get(fmt.Sprintf("http://%s:5050/get?Id=", Sus) + fmt.Sprintf("%d", id))
 	if err != nil {
 		fmt.Println(err)
 		return expression.Expression{}
@@ -42,7 +42,7 @@ func ReadExpression(id int) expression.Expression {
 func GetAll() ([]expression.Expression, error) {
 	var arr []expression.Expression
 	var arr1 []interface{}
-	resp, err := http.Get(fmt.Sprintf("http://%s:5050/getall", sus))
+	resp, err := http.Get(fmt.Sprintf("http://%s:5050/getall", Sus))
 	if err != nil {
 		return nil, err
 	}
@@ -61,21 +61,21 @@ func GetAll() ([]expression.Expression, error) {
 
 func UpdateExpr(expr expression.Expression) {
 	b, _ := json.Marshal(expr)
-	http.Post(fmt.Sprintf("http://%s:5050/upd", sus), "application/json", bytes.NewReader(b))
+	http.Post(fmt.Sprintf("http://%s:5050/upd", Sus), "application/json", bytes.NewReader(b))
 }
 
 func InsertUser(user user.User) {
 	mu.Lock()
 	defer mu.Unlock()
 	b, _ := json.Marshal(user)
-	_, err := http.Post(fmt.Sprintf("http://%s:5050/insertuser", sus), "application/json", bytes.NewReader(b))
+	_, err := http.Post(fmt.Sprintf("http://%s:5050/insertuser", Sus), "application/json", bytes.NewReader(b))
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
 func SelectUserByName(Name string) user.User {
-	resp, err := http.Get(fmt.Sprintf("http://%s:5050/readuserbyname?Name=", sus) + Name)
+	resp, err := http.Get(fmt.Sprintf("http://%s:5050/readuserbyname?Name=", Sus) + Name)
 	if err != nil {
 		fmt.Println(err)
 		return user.User{}
@@ -88,7 +88,7 @@ func SelectUserByName(Name string) user.User {
 }
 
 func SelectUserById(Id int) user.User {
-	resp, err := http.Get(fmt.Sprintf("http://%s:5050/readuserbyid?Id=", sus) + strconv.Itoa(Id))
+	resp, err := http.Get(fmt.Sprintf("http://%s:5050/readuserbyid?Id=", Sus) + strconv.Itoa(Id))
 	if err != nil {
 		fmt.Println(err)
 	}
