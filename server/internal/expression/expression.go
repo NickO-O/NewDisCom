@@ -3,6 +3,7 @@ package expression
 import (
 	"fmt"
 	"server/internal/parser"
+	"strings"
 
 	"github.com/google/uuid"
 )
@@ -19,7 +20,7 @@ type Expression struct {
 
 func NewExpression(Name string) *Expression {
 
-	return &Expression{Name: Name, Status: 2, Id: int(uuid.New().ID()), UserId: 0}
+	return &Expression{Name: strings.Replace(Name, " ", "", -2), Status: 2, Id: int(uuid.New().ID()), UserId: 0}
 }
 func (exp *Expression) ForTemplate() string { // Возвращает информацию для страницы /expressions
 	var stat string

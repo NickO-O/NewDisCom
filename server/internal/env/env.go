@@ -42,7 +42,9 @@ func Init() { // Вызывается в начале, считывает пер
 	}
 }
 
-func Save() { // сохраняет переменные среды
-	f, _ := os.OpenFile(".env", os.O_WRONLY, 0600)
+func Save() error { // сохраняет переменные среды
+	f, err := os.OpenFile(".env", os.O_WRONLY, 0600)
 	f.WriteString("Plus=" + strconv.Itoa(Plus) + "\n" + "Minus=" + strconv.Itoa(Minus) + "\n" + "Mul=" + strconv.Itoa(Mul) + "\n" + "Div=" + strconv.Itoa(Div) + "\n" + "Workers=" + strconv.Itoa(Workers))
+	defer f.Close()
+	return err
 }

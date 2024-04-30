@@ -6,6 +6,7 @@ import (
 	"regexp"
 	constants "server/internal/env"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -28,6 +29,7 @@ func tokenize(str string) []string {
 
 // ExpressionParser парсер нашего выражения
 func ParseExpr(s string) (*Node, error) {
+	s = strings.Replace(s, " ", "", -2)
 	var (
 		tokens    = tokenize(s)
 		stack     []*Node
